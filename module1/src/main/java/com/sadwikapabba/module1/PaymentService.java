@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class PaymentService {
     public void pay(){
-        System.out.println("paying.....");
+        System.out.println("paying.....to this class");
     }
 
     @PostConstruct
