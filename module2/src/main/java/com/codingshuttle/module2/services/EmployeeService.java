@@ -2,6 +2,7 @@ package com.codingshuttle.module2.services;
 
 import com.codingshuttle.module2.dto.EmployeeDTO;
 import com.codingshuttle.module2.entities.EmployeeEntity;
+import com.codingshuttle.module2.exceptions.ResourceNotFoundException;
 import com.codingshuttle.module2.repositories.EmployeeRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -49,28 +50,27 @@ public class EmployeeService {
   }
 
   public EmployeeDTO updateTheEmployeeDetails(EmployeeDTO employee,Long id){
+     isIdExists(id);
     EmployeeEntity employeeEntity = modelMapper.map(employee,EmployeeEntity.class);
     employeeEntity.setId(id);
     return modelMapper.map(employeeRepository.save(employeeEntity),EmployeeDTO.class);
   }
 
-  public boolean isIdExists(Long id){
+  public void isIdExists(Long id){
 
-    return employeeRepository.existsById(id);
+    boolean exists = employeeRepository.existsById(id);
+    if(!exists) throw new ResourceNotFoundException("employee Doesn't exists with id : "+id);
   }
 
   public boolean deleteEmployee(Long id)
   {
-    boolean exists = isIdExists(id);
-    if(!exists)
-      return false;
-    employeeRepository.deleteById(id);    
+    isIdExists(id);
+   employeeRepository.deleteById(id);
     return true; 
   }
 
   public EmployeeDTO updatePartialDataBasedOnData(Map<String,Object> update, Long id){
-    boolean exists = isIdExists(id);
-    if(!exists) return null;
+    isIdExists(id);
     EmployeeEntity employeeEntity = employeeRepository.findById(id).get();
     update.forEach((field,value) -> {
       Field filedToBeUpdated = ReflectionUtils.findField(EmployeeEntity.class,field);

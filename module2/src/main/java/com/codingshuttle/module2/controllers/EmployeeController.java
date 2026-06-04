@@ -2,6 +2,7 @@ package com.codingshuttle.module2.controllers;
 
 import com.codingshuttle.module2.dto.EmployeeDTO;
 import com.codingshuttle.module2.entities.EmployeeEntity;
+import com.codingshuttle.module2.exceptions.ResourceNotFoundException;
 import com.codingshuttle.module2.repositories.EmployeeRepository;
 import com.codingshuttle.module2.services.EmployeeService;
 import org.springframework.http.HttpStatus;
@@ -10,10 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequestMapping("/employees")
@@ -37,8 +35,14 @@ public class EmployeeController {
         Optional<EmployeeDTO> employeeDTO = employeeService.getEmployeeById(id);
         return employeeDTO
                 .map(employeeDTO1 -> ResponseEntity.ok(employeeDTO1))
-                .orElse(ResponseEntity.notFound().build());
+                .orElseThrow(() -> new ResourceNotFoundException("Employee not prsnt with id :"+ id));
     }
+
+//    @ExceptionHandler(NoSuchElementException.class)
+//    public ResponseEntity<String> handleEmployeeNotFound(NoSuchElementException exception){
+//        return new ResponseEntity<>("employee was not found",HttpStatus.NOT_FOUND);
+//
+//    }
 
     @GetMapping
     public ResponseEntity<List<EmployeeDTO>> getAllEmployees(@RequestParam(required = false, name = "inputAge") Integer age,
@@ -54,7 +58,7 @@ public class EmployeeController {
 
 
     @PutMapping("/{employeeId}")
-    public ResponseEntity<EmployeeDTO> updateEmployeeByID(@RequestBody EmployeeDTO employee, @PathVariable Long employeeId) {
+    public ResponseEntity<EmployeeDTO> updateEmployeeByID(@RequestBody @Valid EmployeeDTO employee, @PathVariable Long employeeId) {
         return ResponseEntity.ok(employeeService.updateTheEmployeeDetails(employee, employeeId));
     }
 
