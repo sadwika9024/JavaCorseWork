@@ -1,5 +1,7 @@
 package com.pabbasadwika.module3;
 
+import com.pabbasadwika.module3.dto.ProductInfoProjection;
+import com.pabbasadwika.module3.dto.QuantityGroupBy;
 import com.pabbasadwika.module3.entities.ProductEntity;
 import com.pabbasadwika.module3.repositories.ProductRepository;
 import org.junit.jupiter.api.Test;
@@ -62,6 +64,23 @@ class Module3ApplicationTests {
 		Optional<ProductEntity> productEntity = productRepository.findByTitleAndPrice("chocolate", BigDecimal.valueOf(10));
 		productEntity.ifPresent(System.out::println);
 	}
+
+	@Test
+	void getProjectedData(){
+		//List<ProductInfoProjection> all = productRepository.getAllProductInfoProjection();
+//		List<ProductInfoProjection> all = productRepository.getAllProductInfoProjectionClass();
+//		List<QuantityGroupBy> qn = productRepository.getAllQuantityGroupByClass();
+
+//		for(ProductInfoProjection p : all){
+//			System.out.println(p.getId() + p.getTitle());
+//		}
+
+//		for(QuantityGroupBy q : qn){
+//			System.out.println(q);
+//		}
+		System.out.println(productRepository.updatePatientwithId("laptop", 5L));
+	}
+
 
 
 }
