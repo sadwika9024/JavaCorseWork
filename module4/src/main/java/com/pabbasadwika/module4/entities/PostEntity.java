@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -19,8 +21,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Getter
 @Setter
-public class PostEntity {
-//        extends AuditableEntity{
+@Audited
+public class PostEntity extends AuditableEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -28,6 +30,7 @@ public class PostEntity {
 
     private String title;
 
+    @NotAudited
     private String description;
 
 }

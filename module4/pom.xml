@@ -59,6 +59,11 @@
 			<artifactId>spring-boot-starter-webmvc-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!-- Source: https://mvnrepository.com/artifact/org.hibernate/hibernate-envers -->
+		<dependency>
+			<groupId>org.hibernate.orm</groupId>
+			<artifactId>hibernate-envers</artifactId>
+		</dependency>
 <!--wont work for latest springboot-->
 <!--		<dependency>-->
 <!--			<groupId>org.springdoc</groupId>-->

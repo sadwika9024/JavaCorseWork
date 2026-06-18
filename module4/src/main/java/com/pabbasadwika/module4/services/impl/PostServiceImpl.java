@@ -41,14 +41,14 @@ public class PostServiceImpl implements PostService {
     }
 
 //    @Override
-//    public PostDto updatePost(Long postId, PostDto postDto) {
-//        PostEntity olderPost = postRepository.findById(postId).orElseThrow(() -> new PostNotFound(postId));
-//        postDto.setPostId(postId);
-//        modelMapper.map(postDto,olderPost);
-//        PostEntity savedPostEntity = postRepository.save(olderPost);
-//        return modelMapper.map(savedPostEntity,PostDto.class);
-//
-//    }
+    public PostDto updatePost(Long postId, PostDto postDto) {
+        PostEntity olderPost = postRepository.findById(postId).orElseThrow(() -> new PostNotFound(postId));
+        postDto.setPostId(postId);
+        modelMapper.map(postDto,olderPost);
+        PostEntity savedPostEntity = postRepository.save(olderPost);
+        return modelMapper.map(savedPostEntity,PostDto.class);
+
+    }
 
 
 }
